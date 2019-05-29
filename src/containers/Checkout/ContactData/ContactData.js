@@ -142,7 +142,7 @@ class ContactData extends Component {
 
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {
-            ...this.state.orderFrom
+            ...this.state.orderForm
         };
         const updatedFormElement = {
             ...updatedOrderForm[inputIdentifier]
@@ -152,22 +152,21 @@ class ContactData extends Component {
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         
-        const formIsValid = true;
+        let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-
         }
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
         
     }
 
     render() {
-        const formElementsArray =[]
+        const formElementsArray = [];
         for (let key in this.state.orderForm) {
             formElementsArray.push({
                 id: key,
                 config: this.state.orderForm[key]
-            })
+            });
         }
         let form = (
             <form onSubmit = {this.orderHandler}>
@@ -181,7 +180,7 @@ class ContactData extends Component {
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
                         touched={formElement.config.touched}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                ))}
                 <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
