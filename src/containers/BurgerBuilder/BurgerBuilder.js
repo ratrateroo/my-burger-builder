@@ -8,8 +8,8 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import axios from '../../axios-orders';
-import * as actionTypes from '../../store/actions';
+
+import * as burgerBuilderActions from '../../store/actions/index';
 
 // const INGREDIENT_PRICES = {
 //     salad: 0.5,
@@ -30,20 +30,12 @@ class BurgerBuilder extends Component {
         //ingredients: null, REDUX
         //totalPrice: 4, REDUX
         //purchasable: false, REDUX
-        purchasing: false,
-        loading: false,
-        error: false
+        purchasing: false
     }
     
     componentDidMount () {
         console.log(this.props);
-        // axios.get('https://react-my-burger-4e1e8.firebaseio.com/ingredients.json')
-        //     .then(response => {
-        //         this.setState({ingredients: response.data});
-        //     })
-        //     .catch(error => {
-        //         this.setState({error: true})
-        //     });
+       
     }
 
     updatePurchaseState ( ingredients ) {       
@@ -151,9 +143,7 @@ class BurgerBuilder extends Component {
             purchaseCancelled={this.purchaseCancelHandler}
             purchaseContinued={this.purchaseContinueHandler} />;
         }
-        if (this.state.loading) {
-            orderSummary = <Spinner />
-        }
+       
 
         return (
             <Aux>
@@ -175,8 +165,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
-        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName}),
+        onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
     };
 }
  
